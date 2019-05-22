@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/counter/main",
+    "pages/commodityList/main",
+    "pages/search/main",
+    "pages/commodityDetail/main",
+    "pages/shoppingCart/main",
+    "pages/placeOrder/main",
+    "pages/addressManagement/main",
+    "pages/address/main",
+    "pages/commmon/main",
+    "pages/mainPage/main",
+    "pages/management/main",
+    "pages/modifyPasseord/main",
+    "pages/personalData/main",
+    "pages/transportation/main",
+    "pages/VIP/main",
+    "pages/placeOrderForCart/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}
