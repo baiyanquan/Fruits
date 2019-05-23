@@ -11,17 +11,11 @@
     </i-col>
   </i-row>
   <i-row>
-    <i-col span="4" i-class="col-class">
-      <image class="myimage" :src="headImage" mode="widthFix"/>
-    </i-col>
-    <i-col span="20" i-class="col-class">
-      <i-row><text class="text2">{{reName}}</text></i-row>
-      <i-row>
-        <i-tag class="text2" color="yellow" @click="orderContent">订单详情</i-tag>
-        <i-tag class="text2" color="blue" @click="transContent">物流信息</i-tag>
-      </i-row>
-      <i-row i-class="col-class-right"><text class="text2">共{{oneOrder.quantity.length}}件商品，合计￥{{oneOrder.orderInfo.price}}</text></i-row>
-    </i-col>
+    <item v-for="(j,i) in oneOrder.commodities.length" v-bind:key="i" :items="oneOrder.commodities[i]" :quantity="oneOrder.quantity[i]"></item>
+    <i-row class="col-class-right">
+      {{rePrice}}
+    </i-row>
+    <div style="height:20px;background-color: #F0F0F0"></div>
   </i-row>
   <i-modal title="订单详情" :visible="visible1" @ok="handleClose1" @cancel="handleClose1">
     <i-cell-group>
@@ -36,6 +30,7 @@
 </div>
 </template>
 <script>
+import item from './item.vue';
 import Mynet from '../../utils/net.js';
 export default {
   props:['oneOrder'],
@@ -58,6 +53,9 @@ export default {
       wx.navigateTo({url})
     }
      },
+     components:{
+       item
+     },
      computed:{
        reState:function(){
          if(this.oneOrder.orderInfo.state == 1)
@@ -68,10 +66,18 @@ export default {
        reName:function(){
          let fruitName = this.oneOrder.commodities[0]['name'] + '等';
          return fruitName
+       },
+       rePrice:function(){
+         var myPrice = 0;
+         for(var i in this.oneOrder.quantity.length){
+           myPrice = myPrice + this.oneOrder.quantity[i] * this.oneOrder.commodities[i]['price']
+         }
+         return '共' + this.oneOrder.quantity.length+' '+'合计：￥'+myPrice;
        }
      },
      onLoad(){
-       console.log(this.oneOrder);
+       console.log("oneorder:");
+       console.log(this.oneOrder)
        let resource=JSON.parse(this.oneOrder.commodities[0]['resource'])
        this.headImage = resource["head"]
      }

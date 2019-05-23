@@ -78,7 +78,7 @@ export default {
        };
        Mynet.get(obj).then(res=>{
          this.orderList = res.orderList
-          console.log(res.orderList);
+          console.log(res.orderList); 
        })
      }
 }

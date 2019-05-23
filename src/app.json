@@ -10,7 +10,7 @@
     "pages/placeOrder/main",
     "pages/addressManagement/main",
     "pages/address/main",
-    "pages/commmon/main",
+    "pages/common/main",
     "pages/mainPage/main",
     "pages/management/main",
     "pages/modifyPasseord/main",
