@@ -15,18 +15,14 @@
     <i-row class="col-class-right">
       {{rePrice}}
     </i-row>
+      <i-row>
+    <i-col span="10" offset='16'>
+      <i-tag class="i-tags" name="查看物流" type='border'>查看物流</i-tag>
+      <i-tag class="i-tags" name="评价" type='border' color='yellow' @click="buttonClicked"><text v-if="oneOrder.orderInfo.state == 1 ||oneOrder.orderInfo.state == 4 ">&nbsp;&nbsp;&nbsp;</text>{{reButton}}<text v-if="oneOrder.orderInfo.state == 1 ||oneOrder.orderInfo.state == 4 ">&nbsp;&nbsp;&nbsp;</text></i-tag>
+    </i-col>
+  </i-row>
     <div style="height:20px;background-color: #F0F0F0"></div>
   </i-row>
-  <i-modal title="订单详情" :visible="visible1" @ok="handleClose1" @cancel="handleClose1">
-    <i-cell-group>
-    <i-cell :title="'下单时间：'+oneOrder.orderInfo['createTime']"></i-cell>
-    <i-cell :title="'收货地址：' + oneOrder.addressInfo['address']"></i-cell>
-    <i-cell :title="'收货电话：' + oneOrder.addressInfo['phone']"></i-cell>
-    <i-cell :title="'店铺名：' + oneOrder.shopName"></i-cell>
-    <i-cell :title="'订单信息'"></i-cell>
-    <i-cell v-for="(j,i) in oneOrder.commodities.length" v-bind:key="i" :title="'商品名称：'+oneOrder.commodities[i]['name'] + '    产地：'+oneOrder.commodities[i]['place']+'    数量：'+oneOrder.quantity[i]+oneOrder.commodities[i]['unit']+'    总价：'+oneOrder.commodities[i]['price'] "></i-cell>
-</i-cell-group>
-</i-modal>
 </div>
 </template>
 <script>
@@ -49,8 +45,32 @@ export default {
         this.visible1=false
     },
     transContent(){
+      this.globalData.userInfo.oneOrder=this.oneOrder;
       let url = "../transportation/main" + "?orderId=" + this.oneOrder.orderInfo.id + "&state=" + this.oneOrder.orderInfo.state;
       wx.navigateTo({url})
+    },
+    buttonClicked(){
+      if(this.oneOrder.orderInfo.state == 1){
+        //前去付款
+      }else if(this.oneOrder.orderInfo.state == 2){
+        wx.showToast({
+          title: '提醒发货成功',
+          icon: 'success',
+        })
+      }
+      else if(this.oneOrder.orderInfo.state == 3)
+      {
+        wx.showToast({
+          title: '收货成功',
+          icon: 'success',
+        })
+      }
+      else if(this.oneOrder.orderInfo.state == 4){
+        let url = "../comment/main";
+      wx.navigateTo({url})
+      }
+      else if(this.oneOrder.orderInfo.state == 5)
+        return "已完成"
     }
      },
      components:{
@@ -59,9 +79,27 @@ export default {
      computed:{
        reState:function(){
          if(this.oneOrder.orderInfo.state == 1)
-          return "交易成功"
+          return "待付款"
         else if(this.oneOrder.orderInfo.state == 2)
+        return "待发货"
+        else if(this.oneOrder.orderInfo.state == 3)
+        return "待收货"
+        else if(this.oneOrder.orderInfo.state == 4)
         return "待评价"
+        else if(this.oneOrder.orderInfo.state == 5)
+        return "已完成"
+       },
+       reButton:function(){
+         if(this.oneOrder.orderInfo.state == 1)
+           return  "付款"
+         else if(this.oneOrder.orderInfo.state == 2)
+           return "提醒发货"
+         else if(this.oneOrder.orderInfo.state == 3)
+           return "确认收货"
+         else if(this.oneOrder.orderInfo.state == 4)
+           return "评价"
+         else if(this.oneOrder.orderInfo.state == 5)
+           return "已完成"
        },
        reName:function(){
          let fruitName = this.oneOrder.commodities[0]['name'] + '等';
@@ -69,7 +107,7 @@ export default {
        },
        rePrice:function(){
          var myPrice = 0;
-         for(var i in this.oneOrder.quantity.length){
+         for(var i in this.oneOrder.quantity){
            myPrice = myPrice + this.oneOrder.quantity[i] * this.oneOrder.commodities[i]['price']
          }
          return '共' + this.oneOrder.quantity.length+' '+'合计：￥'+myPrice;
