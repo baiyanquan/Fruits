@@ -5,7 +5,7 @@
       <i-col span="24" v-if="state==2">
         订单状态：已签收
       </i-col>
-      <i-col span="24" v-if="state==1">
+      <i-col span="24" v-else-if="state==1">
         订单状态：运输中
       </i-col>
       <i-col span="24" v-else>
@@ -30,6 +30,7 @@
 import info from './info.vue';
   import Mynet from '../../utils/net.js';
 export default {
+  props:['orderId'],
   data(){
       return {
         state:0,
@@ -57,6 +58,7 @@ export default {
          }
        };
        Mynet.get(obj).then(res=>{
+         console.log(res)
          let trans = JSON.parse(res.logistics.logisticsInfo);
          self.lengthT = Object.keys(trans).length;
          for (let mobj in trans)
