@@ -11,16 +11,21 @@
     </i-row>
     <i-row>
       <ul v-if="current_scroll === 'tab1'">
-      <li v-for="n in orderList.length" :key="n" ><goods :oneOrder='orderList[n-1]'></goods></li>
+      <li v-for="(n,index) in orderList" :key="index" ><goods :oneOrder='orderList[index]'></goods></li>
       </ul>
 
       <ul v-if="current_scroll === 'tab2'">
-      <li v-for="n in numbers_" :key="n"><goods></goods></li>
+      <li v-for="(n,index) in orderList" :key="index" v-if="orderList[index].orderInfo['state'] == 1 "><goods :oneOrder='orderList[index]' ></goods></li>
       </ul>
+      
       <ul v-if="current_scroll === 'tab3'">
-      <li v-for="n in 2" :key="n"><goods></goods></li>
+      <li v-for="(n,index) in orderList" :key="index" v-if="orderList[index].orderInfo['state'] == 2 "><goods :oneOrder='orderList[index]' ></goods></li>
       </ul>
-      <ul>
+      <ul v-if="current_scroll === 'tab4'">
+      <li v-for="(n,index) in orderList" :key="index" v-if="orderList[index].orderInfo['state'] == 3 "><goods :oneOrder='orderList[index]' ></goods></li>
+      </ul>
+      <ul v-if="current_scroll === 'tab5'">
+      <li v-for="(n,index) in orderList" :key="index" v-if="orderList[index].orderInfo['state'] == 4 "><goods :oneOrder='orderList[index]' ></goods></li>
       </ul>
       <div style="height:60px;background-color: #F0F0F0"></div>
     </i-row>
@@ -69,6 +74,12 @@ export default {
      components:{
        goods
      },
+     computed:{
+       reState:function(e){
+         console.log(e)
+         return true;
+       }
+     },
      onLoad(){
        var obj = {
          url:'/orderInfo/findOrderListDetails',
@@ -78,7 +89,9 @@ export default {
        };
        Mynet.get(obj).then(res=>{
          this.orderList = res.orderList
-          console.log(res.orderList); 
+          console.log(res.orderList); for(var n in this.orderList){
+         console.log(n)
+       }
        })
      }
 }
