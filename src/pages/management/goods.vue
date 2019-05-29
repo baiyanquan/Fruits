@@ -17,7 +17,7 @@
     </i-row>
       <i-row>
     <i-col span="10" offset='16'>
-      <i-tag class="i-tags" name="查看物流" type='border' @click="transContent">查看物流</i-tag>
+      <i-tag v-if="oneOrder.orderInfo.state != 1"class="i-tags" name="查看物流" type='border' @click="transContent">查看物流</i-tag>
       <i-tag class="i-tags" name="评价" type='border' color='yellow' @click="buttonClicked"><text v-if="oneOrder.orderInfo.state == 1 ||oneOrder.orderInfo.state == 4 ">&nbsp;&nbsp;&nbsp;</text>{{reButton}}<text v-if="oneOrder.orderInfo.state == 1 ||oneOrder.orderInfo.state == 4 ">&nbsp;&nbsp;&nbsp;</text></i-tag>
     </i-col>
   </i-row>
