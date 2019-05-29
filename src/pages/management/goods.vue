@@ -45,8 +45,7 @@ export default {
         this.visible1=false
     },
     transContent(){
-      //this.globalData.userInfo.oneOrder=this.oneOrder;
-      let url = "../transportation/main" + "?orderId=" + this.oneOrder.orderInfo.id + "&state=" + this.oneOrder.orderInfo.state;
+      let url = "../transportation/main" + "?orderId=" + this.oneOrder.orderInfo.id + "&state=" + this.oneOrder.orderInfo.state+"&headImage="+this.headImage;
       wx.navigateTo({url})
     },
     buttonClicked(){

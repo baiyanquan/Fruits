@@ -4,12 +4,7 @@
       <i-cell title="开启首页摇一摇" label="摇一摇参与电视节目互动，更有身边限时优惠"><switch slot="footer" checked /></i-cell>
       <i-cell title="截屏后提示分享" label="开启后，在宝贝及店铺相关页面截屏时，出现分享提示"><switch slot="footer" checked /></i-cell>
       <i-cell title="WIFI下自动播放视频" label="开启后，详情和微淘视频将自动播放"><switch slot="footer" checked /></i-cell>
-      <i-cell title="清除缓存" label="包括图片、数据等" @click="handleClick" is-link only-tap-footer></i-cell>
-      <i-modal title="帮助" :visible="visible1" @ok="handleClose1" @cancel="handleClose1">
-        <view class="myview" slot="content">
-          清除缓存成功！
-        </view>
-      </i-modal>
+      <i-cell title="清除缓存" label="包括图片、数据等" @click="handleClick"></i-cell>
     </i-cell-group>
 </template>
 
@@ -30,8 +25,10 @@ export default {
         this.current_scroll=detail.target.key
     },
     handleClick:function (  ) {
-        if(this.visible1==false)
-          this.visible1=true
+        wx.showToast({
+          title: '清楚缓存成功',
+          icon: 'success',
+        })
     },
     handleClose1:function () {
         this.visible1=false

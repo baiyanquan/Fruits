@@ -17,11 +17,6 @@
       <i-cell title="会员" is-link url="../VIP/main"></i-cell>
       <i-cell title="帮助手册" @click="handleClick" is-link only-tap-footer></i-cell>
       <i-cell class="mycenter" title="退出登录"></i-cell>
-      <i-modal title="帮助" :visible="visible1" @ok="handleClose1" @cancel="handleClose1">
-        <view class="myview" slot="content">
-          鲜果篮子，是为客户度身定制的购物软件，让您随时随地拥有宝贝搜索、浏览、购买、收藏、在线沟通等在线功能。鲜果篮子众多商品随手掌握。
-        </view>
-      </i-modal>
 </i-cell-group>
     <i-row>
       <i-tab-bar :current="current" color="#FAB831"  @change="handleChange"  fixed="true">
@@ -54,9 +49,18 @@ export default {
     },
     methods: {
        handleClick:function (  ) {
-        console.log("clicked");
-        if(this.visible1==false)
-          this.visible1=true
+        wx.showModal({
+            title: '帮助',
+            content: '鲜果篮子，是为客户度身定制的购物软件，让您随时随地拥有宝贝搜索、浏览、购买、收藏、在线沟通等在线功能。鲜果篮子众多商品随手掌握。',
+            success: function (res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                }else{
+                   console.log('用户点击取消')
+                }
+
+            }
+        })
     },
       handleChange(e){
         let url = ""

@@ -37,6 +37,7 @@ export default {
        console.log(this.items);
        let resource=JSON.parse(this.items['resource'])
        this.headImage = resource["head"]
+       this.globalData.headImage=this.headImage
      }
 }
 </script>
