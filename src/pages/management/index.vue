@@ -17,7 +17,7 @@
       <ul v-if="current_scroll === 'tab2'">
       <li v-for="(n,index) in orderList" :key="index" v-if="orderList[index].orderInfo['state'] == 1 "><goods :oneOrder='orderList[index]' ></goods></li>
       </ul>
-      
+
       <ul v-if="current_scroll === 'tab3'">
       <li v-for="(n,index) in orderList" :key="index" v-if="orderList[index].orderInfo['state'] == 2 "><goods :oneOrder='orderList[index]' ></goods></li>
       </ul>
@@ -88,6 +88,7 @@ export default {
          }
        };
        Mynet.get(obj).then(res=>{
+         console.log('logging')
          this.orderList = res.orderList
           console.log(res.orderList); for(var n in this.orderList){
          console.log(n)

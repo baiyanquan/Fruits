@@ -11,14 +11,14 @@
     </i-col>
   </i-row>
   <i-row>
-    <item v-for="(j,i) in oneOrder.commodities.length" v-bind:key="i" :items="oneOrder.commodities[i]" :quantity="oneOrder.quantity[i]"></item>
+    <item v-for="(j,i) in oneOrder.commodities.length" v-bind:key="i" :items="oneOrder.commodities[i]" :quantity="oneOrder.quantity[i]" :state="this.oneOrder.orderInfo.state"></item>
     <i-row class="col-class-right">
       {{rePrice}}
     </i-row>
       <i-row>
     <i-col span="10" offset='16'>
-      <i-tag v-if="oneOrder.orderInfo.state != 1"class="i-tags" name="查看物流" type='border' @click="transContent">查看物流</i-tag>
-      <i-tag class="i-tags" name="评价" type='border' color='yellow' @click="buttonClicked"><text v-if="oneOrder.orderInfo.state == 1 ||oneOrder.orderInfo.state == 4 ">&nbsp;&nbsp;&nbsp;</text>{{reButton}}<text v-if="oneOrder.orderInfo.state == 1 ||oneOrder.orderInfo.state == 4 ">&nbsp;&nbsp;&nbsp;</text></i-tag>
+      <i-tag v-if="oneOrder.orderInfo.state != 1" class="i-tags" name="查看物流" type='border' @click="transContent">查看物流</i-tag>
+
     </i-col>
   </i-row>
     <div style="height:20px;background-color: #F0F0F0"></div>
@@ -65,8 +65,6 @@ export default {
         })
       }
       else if(this.oneOrder.orderInfo.state == 4){
-        let url = "../comment/main";
-      wx.navigateTo({url})
       }
       else if(this.oneOrder.orderInfo.state == 5)
         return "已完成"
